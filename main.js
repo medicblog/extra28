@@ -36,10 +36,10 @@ const {log,error,warn}=console;
                 C.strokeStyle = 'rgba(0,0,0,.8)';
                 C.lineWidth = 2;
                 P.addEventListener(
-                    'mouseup',
+                    'click',
                     (e) => {
                         e.stopPropagation();
-                        
+
                         let [mx, my] = [
                             ( 1) * (e.offsetX - R),
                             (-1) * (e.offsetY - R)

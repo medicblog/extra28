@@ -8,16 +8,14 @@ body,
     box-sizing:border-box
 }
 body{
-    min-width: 320px;
-    overflow: auto
+    min-width:320px;
+    overflow:auto
 }
 .page noscript {
     font:16px monospace;
     padding:1em
 }
-.page,
-.page article,
-.page #box{
+.flex-c{
     display:flex;
     flex-flow:column nowrap;
     justify-content:center;
@@ -30,54 +28,26 @@ body{
     & article{
         outline:5px solid rgba(0,128,0,.5);
         outline-offset:-5px;
-        background-color:rgba(255,255,0,.2);
         width:min(500px,100%);
         min-height:500px;
         & #box{
-            outline:4px solid red;
-            outline-offset:-8px;
             position:relative;
             background:no-repeat center/100% url('./circle.svg');
             & canvas{
-                outline:2px dashed purple;
-                outline-offset:-12px;
-                z-index:1;
-                + div{
-                    border:2px dashed red;
-                    box-shadow:inset 0 0 0 4px rgba(255,128,0,.5);
-                    background-color:rgba(0,128,0,.1);
-                }
+                z-index:1
             }
             & div {
-                position:absolute;
-                z-index:10;
-
-                /*outline:2px solid rgba(0,128,0,.5);
-                border:2px solid green;*/
-
-                border-radius:50%;
                 width:400px;
                 height:400px;
-
+                position:absolute;
+                z-index:10;
+                background-color:rgba(0,128,0,.1);
+                border-radius:50%;
                 cursor:pointer;
                 opacity:1
             }
             & div:focus{
                 opacity:0.5
-            }
-            & div::before{
-                font:14px monospace;
-                content:'before';
-                position:absolute;
-                color:purple;
-                outline:1px dotted purple;
-                width:fit-content;
-                padding:5px;
-                left:0;
-                bottom:0
-            }
-            & div:focus::before{
-                content:'click'
             }
         }
     }
