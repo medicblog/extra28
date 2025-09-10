@@ -3,27 +3,78 @@ body,
 .page *,
 *::before,
 *::after{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box
 }
 .page,
 .page article,
 .page #box{
     display:flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
+    flex-flow:column nowrap;
+    justify-content:center;
+    align-items:center
 }
 .page{
-    min-height: 100vh;
-    background-color: rgba(0,50,0,.2);
+    min-height:100vh;
+    background-color:rgba(0,50,0,.2);
     border:10px solid darkgreen;
     & article{
         outline:5px solid rgba(0,128,0,.5);
-        outline-offset: -5px;
-        background-color: rgba(255,255,0,.2);
+        outline-offset:-5px;
+        background-color:rgba(255,255,0,.2);
         width:min(500px,100%);
-        min-height:500px
+        min-height:500px;
+        & #box{
+            outline:4px solid red;
+            outline-offset:-8px;
+            position:relative;
+            background:no-repeat center/100% url('./circle.svg');
+            & canvas{
+                outline:2px dashed purple;
+                outline-offset:-12px;
+                z-index:1;
+                + div{
+                    border:2px dashed red;
+                    box-shadow:inset 0 0 0 4px rgba(255,128,0,.5);
+                    background-color:rgba(0,128,0,.1);
+                }
+            }
+            & div {
+                position:absolute;
+                z-index:10;
+
+                /*outline:2px solid rgba(0,128,0,.5);
+                border:2px solid green;*/
+
+                border-radius:50%;
+                width:400px;
+                height:400px;
+
+                cursor:pointer;
+                opacity:1
+            }
+            & div:focus{
+                opacity:0.5
+            }
+            & div::before{
+                content:'before';
+                position:absolute;
+                color:purple;
+                outline:1px dotted purple;
+                width:fit-content;
+                padding:5px;
+                left:0;
+                bottom:0
+            }
+            & div:focus::before{
+                content:'click'
+            }
+        }
+    }
+}
+@media (max-width:500px){
+    #box{
+        transform:scale(.7)
     }
 }
