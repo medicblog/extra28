@@ -1,9 +1,10 @@
 // @ts-check
 // 'use strict';
 import shapes from './modules/shapes.js';
+import {valuesClosure, rads} from './modules/values.js';
 
 const {log,error,warn}=console;
-(function main(R = 200, MW = 250, size = 10) {
+(function main(R = 200, MW = 250, size = 10, vsize = 7) {
     log(`%cradius : ${R} - mwidth : ${MW}`,'color:grey');
     // test('shapes : [10-09-2025 18:20:00]');
     if (
@@ -56,110 +57,38 @@ const {log,error,warn}=console;
                 log(LIS);
 
                 const {style, clear, arcc, point, line} = shp;
-
-                const [r9, r5, r2] = [.9 * R, .5 * R, .2 * R];
-
-                /*---------------------*/
-                // values (10)
-                /*
-                ang  px  py   tan  hpr
-                arc  cos sin  dgr  prc
-                */
-  
-                const {PI,acos,hypot,round,abs} = Math;
-
-                function valuesClosure(rd) {
-                    // rd = R
-                    const fix = (n = 0, p = 2) => +(n.toFixed(p));
-                    // const A = Array(size).fill(0);
-                    // two arrays :
-                    // - draw :
-                    const A = Array(6).fill(0);
-                    // - text :
-                    const B = Array(10).fill('0');
-
-                    return (ox, oy) => {
-                        let [x, y] = [
-                            ( 1) * (ox - rd),
-                            (-1) * (oy - rd),
-                        ];
-
-                        let hp = hypot(x, y);                        
-                        
-                        if (hp >= .05 * rd && hp <= rd) {
-                            let _cos = x / hp;
-                            let _sin = y / hp;
-                            let a = _sin >= 0 ? 0 : 1;
-                            a = (1 - 2*a) * (acos(_cos) - a * (2*PI));
-                            let _x = fix(rd * _cos);
-                            let _y = fix(rd * _sin);
-                            let _tg = _x !== 0 ? fix(_y/_x) : 0;
-                            let _ct = _y !== 0 ? fix(_x/_y) : 0;
-
-
-                            // ang & px & py
-                            A[0] = fix(a);
-                            A[1] = _x;
-                            A[2] = _y;
-                            // tgr & ctr
-                            A[3] = _tg * R;
-                            A[4] = _ct * R;
-                            A[5] = round(hp);
-
-                            B[0] = `${A[0]} rad`;
-                            B[1] = `${A[1]}`;
-                            B[2] = `${A[2]}`;
-                            B[3] = `${_tg}`;
-                            B[4] = `${fix((hp / rd) * 100)}%`;
-                            B[5] = `${round(rd * a)}`;
-                            B[6] = `${fix(_cos)}`;
-                            B[7] = `${fix(_sin)}`;
-                            B[8] = `${round((a / PI) * 180)}°`;
-                            B[9] = `${fix((a / (2 * PI)) * 100)}%`;
-
-                            return [A, B];
-                        } else {
-                            return null;
-                        }
-                    };
-                }
-
-
-
-
-
-
-
-                /*---------------------*/
-
-                // const values = valuesClosure()
-
+                const [r, r9, r5, r2] = rads(R);                
                 const values = valuesClosure(R);
-                log(values);
-
-
-
-
-
-                
 
                 P.addEventListener(
                     'click',
                     (e) => {
                         e.stopPropagation();
-
                         const valuesArray = values(e.offsetX, e.offsetY);
-
-                        if (!(Array.isArray(valuesArray) && valuesArray.length === 2)) {
+                        log(valuesArray);
+                        if (!(
+                            Array.isArray(valuesArray) && valuesArray.length === 2
+                            && valuesArray.every((x) => Array.isArray(x))
+                        )) {
                             warn('userEvent:failed');
                             return;
                         }
+                        const [A, B] = valuesArray;
 
-                        const [a, x, y, tg, ct, hp] = valuesArray[0];
-                        const txtArr = valuesArray[1];
+                        if (!(
+                            A.length === vsize 
+                            && A.every((x) => typeof x === 'number' && isFinite(x))
+                            && B.length === size
+                            && B.every((x) => typeof x === 'string' && x.length < 20)
+                        ))
+                        {
+                            warn('userEvent:failed(2)');
+                            return;
+                        }
+
+                        const [a, x, y, tg, ct, hp, bt] = A;
 
                         // draw
-
                         clear();
                         style();
                         if (a !== 0) {
@@ -167,19 +96,19 @@ const {log,error,warn}=console;
                             arcc(r5, a);
                             style();
                             arcc(r2, a);
-                            arcc(R, a);
+                            arcc(r, a);
                         }
                         line();
                         if (tg && ct) {
                             style('rgba(0,128,0,.8)');
-                            if (abs(tg) <= R) {
-                                line(R, tg, R, 0);
-                                line(R, tg);
-                                point(R, tg);
+                            if (bt === 1) {
+                                line(r, tg, r, 0);
+                                line(r, tg);
+                                point(r, tg);
                             } else {
-                                line(ct, R, 0, R);
-                                line(ct, R);
-                                point(ct, R);
+                                line(ct, r, 0, r);
+                                line(ct, r);
+                                point(ct, r);
                             }
                         }
                         style('rgba(0,0,255,.8)');
@@ -197,18 +126,16 @@ const {log,error,warn}=console;
                         point(x, y, 7);
                         point(x, y, 3);
                         style('rgba(140,0,140,.5)');
-                        arcc(Math.floor(hp));
+                        arcc(hp);
                         style();
-                        point(0, R);
-                        point(R);
+                        point(0, r);
+                        point(r);
                         point();
 
                         // text
-
                         LIS.forEach((li, i) => {
-                            li.textContent = txtArr[i];
+                            li.textContent = B[i];
                         });
-
                     },
                     false
                 );
