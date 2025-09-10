@@ -11,6 +11,9 @@ body{
     min-width:320px;
     overflow:auto
 }
+ul{
+    list-style-type: none;
+}
 .page noscript {
     font:16px monospace;
     padding:1em
@@ -28,9 +31,19 @@ body{
     & article{
         outline:5px solid rgba(0,128,0,.5);
         outline-offset:-5px;
-        width:min(500px,100%);
-        min-height:500px;
+        width:min(550px,100%);
+        min-height:550px;
+        font-size: 20px;
+        font-family:system-ui, sans-serif;
+        & h2 {
+            font-size: 1em;
+            text-align: center;
+            width:100%;
+            padding:5px;
+        }
         & #box{
+            outline:2px solid rgba(255,10,0,.5);
+            outline-offset: -8px;
             position:relative;
             background:no-repeat center/100% url('./circle.svg');
             & canvas{
@@ -50,10 +63,38 @@ body{
                 opacity:0.5
             }
         }
+        & #list{
+            outline:2px solid purple;
+            font-size:.8em;
+            width:100%;
+            display: grid;
+            grid-template: repeat(2,25px)/repeat(5,1fr);
+            & li{
+                outline: 1px solid rgba(0,0,0,.8);
+                padding:5px;  
+                position:relative;
+                text-align: right;
+                overflow: auto;
+            }
+            & li::before{
+                color:purple;
+                outline:1px dotted purple;
+                font:bold 12px monospace;
+                max-width:4ch;
+                content:attr(data-id);
+                position:absolute;
+                top:0;
+                bottom:0;
+                left:5px;
+            }
+        }
     }
 }
-@media (max-width:500px){
+@media (max-width:550px){
     #box{
         transform:scale(.7)
+    }
+    .page article #list{
+        grid-template: repeat(5,25px)/repeat(2,1fr);
     }
 }

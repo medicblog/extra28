@@ -41,6 +41,7 @@ function shapes(c, rd, mw) {
             c.lineTo(x, y);
             c.stroke();
         },
+        
     };
 }
 

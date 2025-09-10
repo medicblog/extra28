@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="basic web app">
-    
+
     <link rel="preload" href="./circle.svg" as="image" type="image/svg+xml">
     <link rel="preload" href="./style.css" as="style">
     <link rel="modulepreload" href="./main.js">
@@ -18,10 +18,28 @@
     <div class="page flex-c">
         <noscript><pre>Javascript must be enabled.</pre></noscript>
         <article class="flex-c">
+            <h2>UNIT CIRCLE 1:200</h2>
             <div id="box" class="flex-c">
                 <canvas width="500" height="500"></canvas>
                 <div id="plan" tabindex="0"></div>
             </div>
+            <ul id="list">
+                <!--
+                ang px py tan hpr
+                arc cos sin dgr prc
+                -->
+                <li data-id="ANG">-8888.88</li>
+                <li data-id="P_X">-8888.88</li>
+                <li data-id="P_Y">-8888.88</li>
+                <li data-id="TAN">-8888.88</li>
+                <li data-id="HPR">-8888.88</li>
+
+                <li data-id="ARC">-8888.88</li>
+                <li data-id="COS">-8888.88</li>
+                <li data-id="SIN">-8888.88</li>
+                <li data-id="DGR">-8888.88</li>
+                <li data-id="PRC">-8888.88</li>
+            </ul>
         </article>
     </div>
     <script type="module" src="./main.js"></script>
