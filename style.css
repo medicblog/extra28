@@ -7,6 +7,14 @@ body,
     padding:0;
     box-sizing:border-box
 }
+body{
+    min-width: 320px;
+    overflow: auto
+}
+.page noscript {
+    font:16px monospace;
+    padding:1em
+}
 .page,
 .page article,
 .page #box{
@@ -58,6 +66,7 @@ body,
                 opacity:0.5
             }
             & div::before{
+                font:14px monospace;
                 content:'before';
                 position:absolute;
                 color:purple;
