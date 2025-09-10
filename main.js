@@ -1,8 +1,11 @@
 // @ts-check
 // 'use strict';
+import test from './modules/shapes.js';
+
 const {log,error,warn}=console;
 (function main(R = 200, MW = 250) {
     log(`%cradius : ${R} - mwidth : ${MW}`,'color:grey');
+    test('shapes : [10-09-2025 18:20:00]');
     if (
         !window || typeof window !== 'object'
         || !('document' in window) || window.top !== window.self
