@@ -5,8 +5,6 @@ import {valuesClosure, rads} from './modules/values.js';
 
 const {log,error,warn}=console;
 (function main(R = 200, MW = 250, size = 10, vsize = 7) {
-    log(`%cradius : ${R} - mwidth : ${MW}`,'color:grey');
-    // test('shapes : [10-09-2025 18:20:00]');
     if (
         !window || typeof window !== 'object'
         || !('document' in window) || window.top !== window.self
@@ -21,25 +19,17 @@ const {log,error,warn}=console;
             log(`%cwindow:${ew.type}`,'color:purple;font-weight:bold');
             try {
                 const box = document.getElementById('box');
-
-
                 if (!(
                     box instanceof HTMLElement
                 )) {
                     throw new Error('root:failed');
                 }
-
-
-
                 const shp = shapes(
                     box.querySelector('canvas')?.getContext('2d'),
                     R, MW
                 );
-
                 const P = box.querySelector('#plan');
-
                 const LIS = document.getElementById('list')?.querySelectorAll('li');
-
                 if (!(
                     shp && typeof shp === 'object'
                     && P instanceof HTMLElement
@@ -51,21 +41,14 @@ const {log,error,warn}=console;
                 {
                     throw new Error('elements:failed');
                 }
-                log('%celements:success','color:blue');
-
-                log('list elements :');
-                log(LIS);
-
                 const {style, clear, arcc, point, line} = shp;
                 const [r, r9, r5, r2] = rads(R);                
                 const values = valuesClosure(R);
-
                 P.addEventListener(
                     'click',
                     (e) => {
                         e.stopPropagation();
                         const valuesArray = values(e.offsetX, e.offsetY);
-                        log(valuesArray);
                         if (!(
                             Array.isArray(valuesArray) && valuesArray.length === 2
                             && valuesArray.every((x) => Array.isArray(x))
@@ -74,7 +57,6 @@ const {log,error,warn}=console;
                             return;
                         }
                         const [A, B] = valuesArray;
-
                         if (!(
                             A.length === vsize 
                             && A.every((x) => typeof x === 'number' && isFinite(x))
@@ -85,9 +67,7 @@ const {log,error,warn}=console;
                             warn('userEvent:failed(2)');
                             return;
                         }
-
                         const [a, x, y, tg, ct, hp, bt] = A;
-
                         // draw
                         clear();
                         style();
@@ -131,7 +111,6 @@ const {log,error,warn}=console;
                         point(0, r);
                         point(r);
                         point();
-
                         // text
                         LIS.forEach((li, i) => {
                             li.textContent = B[i];

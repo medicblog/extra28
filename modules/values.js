@@ -1,11 +1,9 @@
 // @ts-check
 const {PI,acos,hypot,round,abs} = Math;
 const fix = (n = 0, p = 2) => +(n.toFixed(p));
-
 function rads(r) {
     return [r, .9 * r, .5 * r, .2 * r];
 }
-
 function valuesClosure(rd) {    
     const A = Array(7).fill(0);
     const B = Array(10).fill('0');
