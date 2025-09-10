@@ -1,7 +1,6 @@
 // @ts-check
 const pc = 2 * Math.PI;
 function shapes(c, rd, mw) {
-    console.log('%cshapes:called','color:slategrey');
     if (!(
         c instanceof CanvasRenderingContext2D
         && c.canvas.offsetWidth === 2 * mw
@@ -9,13 +8,10 @@ function shapes(c, rd, mw) {
     )) {
         throw new Error('shapes:failed');
     }
-    console.log('%c--shapes:success','color:blue');
-
     c.setTransform(1, 0, 0, -1, mw, mw);
     c.fillStyle = 'rgb(255,255,255)';
     c.strokeStyle = 'rgba(0,0,0,.8)';
     c.lineWidth = 2;
-
     return {
         style(s = 'rgba(0,0,0,.8)', l = 2) {
             c.strokeStyle = s;
@@ -40,8 +36,7 @@ function shapes(c, rd, mw) {
             c.moveTo(xo, yo);
             c.lineTo(x, y);
             c.stroke();
-        },
-        
+        },        
     };
 }
 
