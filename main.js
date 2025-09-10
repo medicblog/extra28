@@ -20,12 +20,12 @@ const {log,error,warn}=console;
             log(`%cwindow:${ew.type}`,'color:purple;font-weight:bold');
             try {
                 const box = document.getElementById('box');
+
                 if (!(
                     box instanceof HTMLElement
                 )) {
                     throw new Error('root:failed');
                 }
-                // const C = ;
 
                 const shp = shapes(
                     box.querySelector('canvas')?.getContext('2d'),
@@ -33,6 +33,7 @@ const {log,error,warn}=console;
                 );
 
                 const P = box.querySelector('#plan');
+
                 if (!(
                     shp && typeof shp === 'object'
                     && P instanceof HTMLElement
@@ -48,6 +49,22 @@ const {log,error,warn}=console;
 
                 const [r9, r5, r2] = [.9 * R, .5 * R, .2 * R];
 
+                /*---------------------*/
+                // values (10)
+                /*
+                    ang p-x p-y tan hpr
+                    dgr cos sin arc prc
+                */
+                const fix = (n = 0, p = 2) => +(n.toFixed(p));
+
+                
+
+
+
+                /*---------------------*/
+
+                
+
                 P.addEventListener(
                     'click',
                     (e) => {
@@ -61,16 +78,18 @@ const {log,error,warn}=console;
                         ];
 
                         let hp = Math.hypot(mx, my);
+                        let hpr = fix((hp / R) * 100);
+                        log(`%cHPR: ${hpr}`,'font-weight:bold;color:purple');
                         if (hp >= r2 && hp <= R) {
                             let _cos = mx / hp;
                             let _sin = my / hp;
                             let a = _sin >= 0 ? 0 : 1;
                             a = (1 - 2 * a) * (Math.acos(_cos) - 2 * a * Math.PI);
-                            let x = +(R * _cos).toFixed(2);
-                            let y = +(R * _sin).toFixed(2);
+                            let x = fix(R * _cos);
+                            let y = fix(R * _sin);
                             // tg && ct 
-                            let tg = x !== 0 ? +(y / x).toFixed(2) : 0;
-                            let ct = y !== 0 ? +(x / y).toFixed(2) : 0;
+                            let tg = x !== 0 ? fix(y / x) : 0;
+                            let ct = y !== 0 ? fix(x / y) : 0;
 
                             const [tgr, ctr] = [R * tg, R * ct];
 
@@ -110,7 +129,6 @@ const {log,error,warn}=console;
                             style('rgba(255,0,0,.8)');
                             line(x, y, x , 0);
                             line(0, y);
-
 
                             style('rgba(0,0,255,.8)');
                             point(x, 0);
