@@ -2,7 +2,7 @@
 // 'use strict';
 import shapes from './modules/shapes.js';
 import list from './modules/list.js';
-import {valuesClosure, rads} from './modules/values.js';
+import values from './modules/values.js';
 
 const {log,error,warn}=console;
 (function main() {
@@ -19,7 +19,8 @@ const {log,error,warn}=console;
         (ew) => {
             log(`%cwindow:${ew.type}`,'color:purple;font-weight:bold');
             try {
-                const [r, r9, r5, r2] = rads();
+                const [r, r9, r5, r2] = values.radii();
+
                 const app = document.getElementById('app');
                 if (!(
                     app instanceof HTMLElement
@@ -47,25 +48,25 @@ const {log,error,warn}=console;
                 {
                     throw new Error('elements:failed');
                 }                                
-                const values = valuesClosure();
+
                 const {style, clear, arcc, point, line} = shp;
-                /*-----------------------------------------------------------*/
+
                 /*-----------------------------------------------------------*/
                 P.addEventListener(
                     'click',
                     (e) => {
                         e.stopPropagation();
                         console.clear();
-                        const valuesArray = values(e.offsetX, e.offsetY);
+                        const valuesArray = values.getResult(e.offsetX, e.offsetY);
                         log(valuesArray);
                         if (!valuesArray) {
                             warn('userEvent:failed');
                             return;
                         }
-                        // values
+                        // _values_
                         const [A, B] = valuesArray;
                         const [a, x, y, tg, ct, hp, bt] = A;
-                        // draw
+                        // _draw_
                         clear();
                         style();
                         if (a !== 0) {
@@ -108,7 +109,7 @@ const {log,error,warn}=console;
                         point(0, r);
                         point(r);
                         point();
-                        // text
+                        // _text_
                         lst.forEach((li, i) => {
                             li.textContent = B[i];
                         });
