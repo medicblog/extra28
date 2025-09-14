@@ -1,6 +1,6 @@
 // @ts-check
-import _base from './base.js';
-import {fix, isNum, isStr} from './xutils.js';
+import _base from './globals/base.js';
+import {fix, isNum, isStr} from './globals/utils.js';
 
 const {PI,acos,hypot,round,abs} = Math;
 const {radius, mwidth, nsize, lsize} = _base;

@@ -1,5 +1,5 @@
 // @ts-check
-import _base from './base.js';
+import _base from './globals/base.js';
 const {lsize} = _base;
 
 function list(ul = {}) {

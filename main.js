@@ -1,8 +1,11 @@
 // @ts-check
 // 'use strict';
+import values from './modules/values.js';
 import shapes from './modules/shapes.js';
 import list from './modules/list.js';
-import values from './modules/values.js';
+import plan from './modules/plan.js';
+
+
 
 const {log,error,warn}=console;
 (function main() {
@@ -36,14 +39,13 @@ const {log,error,warn}=console;
                     app.querySelector('#list')?.querySelectorAll('li')
                 );
 
-                const P = app.querySelector('#plan');
+                const pln = plan(
+                    app.querySelector('#plan') ?? {}
+                );
 
                 if (!(
                     shp && typeof shp === 'object'
-                    && lst
-                    && P instanceof HTMLElement
-                    && P.offsetWidth === 2 * r
-                    && P.offsetHeight === P.offsetWidth
+                    && lst && pln
                 ))
                 {
                     throw new Error('elements:failed');
@@ -52,7 +54,7 @@ const {log,error,warn}=console;
                 const {style, clear, arcc, point, line} = shp;
 
                 /*-----------------------------------------------------------*/
-                P.addEventListener(
+                pln.addEventListener(
                     'click',
                     (e) => {
                         e.stopPropagation();
