@@ -1,20 +1,8 @@
 // @ts-check
 import _base from './globals/base.js';
-import {fix, isNum, isStr} from './globals/utils.js';
-
+import {fix, isNum, isArrNum, isArrStr} from './globals/utils.js';
 const {PI,acos,hypot,round,abs} = Math;
-const {radius, mwidth, nsize, lsize} = _base;
-
-function checkResult(x = [[0],[0]]) {
-    return (
-        Array.isArray(x) && x.length === 2
-        && x.every((u) => Array.isArray(u))
-        && (x[0].length === nsize && x[0].every((u) => isNum(u)))
-        // @ts-ignore
-        && (x[1].length === lsize && x[1].every((u) => isStr(u)))
-    );
-}
-
+const {radius, nsize, lsize} = _base;
 const values = {
     radii(r = radius) {
         return [r, .9 * r, .5 * r, .2 * r];
@@ -23,8 +11,6 @@ const values = {
         if (!(isNum(ox) && isNum(oy))) {
             return null;
         }
-        const A = Array(nsize).fill(0);
-        const B = Array(lsize).fill('0');
         let [x, y] = [
             ( 1) * (ox - r),
             (-1) * (oy - r),
@@ -41,27 +27,43 @@ const values = {
         let _y = fix(r * _sin);
         let _tg = _x !== 0 ? fix(_y/_x) : 0;
         let _ct = _y !== 0 ? fix(_x/_y) : 0;
-        A[0] = fix(a);
-        A[1] = _x;
-        A[2] = _y;
-        A[3] = fix(_tg * r);
-        A[4] = fix(_ct * r);
-        A[5] = round(hp);
-        A[6] = abs(_tg) <= 1 ? 1 : 0;
-        B[0] = `${A[0]} rad`;
-        B[1] = `${A[1]}`;
-        B[2] = `${A[2]}`;
-        B[3] = `${_tg}`;
-        B[4] = `${fix((hp / r) * 100)}%`;
-        B[5] = `${round(r * a)}`;
-        B[6] = `${fix(_cos)}`;
-        B[7] = `${fix(_sin)}`;
-        B[8] = `${round((a / PI) * 180)}°`;
-        B[9] = `${fix((a / (2 * PI)) * 100)}%`;
-        const result = [A,B];
-        if (!checkResult(result)) {
+
+        const result = {
+            _values: {
+                a: fix(a),
+                x: _x,
+                y: _y,
+                tg: fix(_tg * r),
+                ct: fix(_ct * r),
+                hp: round(hp),
+                btg: abs(_tg) <= 1 ? 1 : 0,
+            },
+            _texts: {
+                ANG: `${fix(a)} rad`,
+                PTX: `${_x}`,
+                PTY: `${_y}`,
+                TAN: `${_tg}`,
+                HPR: `${fix((hp / r) * 100)}%`,
+                ARC: `${round(r * a)}`,
+                COS: `${fix(_cos)}`,
+                SIN: `${fix(_sin)}`,
+                DGR: `${round((a / PI) * 180)}°`,
+                PRC: `${fix((a / (2 * PI)) * 100)}%`,
+            },
+        };
+
+        const v_values = Object.values(result._values);
+        const v_texts  = Object.values(result._texts);
+
+        if (!(
+            v_values.length === nsize
+            && v_texts.length === lsize
+            && isArrNum(Object.values(result._values))
+            && isArrStr(Object.values(result._texts))
+        )) {
             return null;
         }
+
         return result;
     }
 };

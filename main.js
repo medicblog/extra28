@@ -65,9 +65,8 @@ const {log,error,warn}=console;
                             warn('userEvent:failed');
                             return;
                         }
-                        // _values_
-                        const [A, B] = valuesArray;
-                        const [a, x, y, tg, ct, hp, bt] = A;
+                        const {_texts} = valuesArray;
+                        const {a, x, y, tg, ct, hp, btg} = valuesArray._values;
                         // _draw_
                         clear();
                         style();
@@ -81,7 +80,7 @@ const {log,error,warn}=console;
                         line();
                         if (tg && ct) {
                             style('rgba(0,128,0,.8)');
-                            if (bt === 1) {
+                            if (btg === 1) {
                                 line(r, tg, r, 0);
                                 line(r, tg);
                                 point(r, tg);
@@ -112,8 +111,17 @@ const {log,error,warn}=console;
                         point(r);
                         point();
                         // _text_
-                        lst.forEach((li, i) => {
-                            li.textContent = B[i];
+                        lst.forEach((li) => {
+                            let text = 'N/A';
+                            if (
+                                li instanceof HTMLElement
+                                && li.dataset.id
+                                && Object.hasOwn(_texts, li.dataset.id) 
+                            ) {
+                                // @ts-ignore
+                                text = _texts[li.dataset.id];     
+                            }
+                            li.textContent = text;
                         });
                     },
                     false
