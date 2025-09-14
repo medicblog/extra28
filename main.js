@@ -1,10 +1,11 @@
 // @ts-check
 // 'use strict';
 import shapes from './modules/shapes.js';
+import list from './modules/list.js';
 import {valuesClosure, rads} from './modules/values.js';
 
 const {log,error,warn}=console;
-(function main(R = 200, MW = 250, size = 10, vsize = 7) {
+(function main() {
     if (
         !window || typeof window !== 'object'
         || !('document' in window) || window.top !== window.self
@@ -18,56 +19,65 @@ const {log,error,warn}=console;
         (ew) => {
             log(`%cwindow:${ew.type}`,'color:purple;font-weight:bold');
             try {
-                const box = document.getElementById('box');
+
+                const [r, r9, r5, r2] = rads();
+
+                const app = document.getElementById('app');
                 if (!(
-                    box instanceof HTMLElement
+                    app instanceof HTMLElement
                 )) {
                     throw new Error('root:failed');
                 }
+                // function shapes(c, rd = radius, mw = mwidth)
                 const shp = shapes(
-                    box.querySelector('canvas')?.getContext('2d'),
-                    R, MW
+                    app.querySelector('canvas')?.getContext('2d')
                 );
-                const P = box.querySelector('#plan');
-                const LIS = document.getElementById('list')?.querySelectorAll('li');
+
+                const lst = list(
+                    app.querySelector('#list')?.querySelectorAll('li')
+                );
+
+                const P = app.querySelector('#plan');
+
                 if (!(
                     shp && typeof shp === 'object'
+                    && lst
                     && P instanceof HTMLElement
-                    && P.offsetWidth === 2 * R
+                    && P.offsetWidth === 2 * r
                     && P.offsetHeight === P.offsetWidth
-                    && LIS instanceof NodeList
-                    && LIS.length === size
                 ))
                 {
                     throw new Error('elements:failed');
                 }
+                                
+                                
+                const values = valuesClosure();
                 const {style, clear, arcc, point, line} = shp;
-                const [r, r9, r5, r2] = rads(R);                
-                const values = valuesClosure(R);
+                /*-----------------------------------------------------------*/
+                /*-----------------------------------------------------------*/
+
                 P.addEventListener(
                     'click',
                     (e) => {
                         e.stopPropagation();
+
+                        console.clear();
+
                         const valuesArray = values(e.offsetX, e.offsetY);
-                        if (!(
-                            Array.isArray(valuesArray) && valuesArray.length === 2
-                            && valuesArray.every((x) => Array.isArray(x))
-                        )) {
+                        log(valuesArray);
+                        if (!valuesArray) {
                             warn('userEvent:failed');
                             return;
                         }
+
+                        // log(valuesArray);
+
+                        // values
+
                         const [A, B] = valuesArray;
-                        if (!(
-                            A.length === vsize 
-                            && A.every((x) => typeof x === 'number' && isFinite(x))
-                            && B.length === size
-                            && B.every((x) => typeof x === 'string' && x.length < 20)
-                        ))
-                        {
-                            warn('userEvent:failed(2)');
-                            return;
-                        }
+
                         const [a, x, y, tg, ct, hp, bt] = A;
+
                         // draw
                         clear();
                         style();
@@ -112,7 +122,7 @@ const {log,error,warn}=console;
                         point(r);
                         point();
                         // text
-                        LIS.forEach((li, i) => {
+                        lst.forEach((li, i) => {
                             li.textContent = B[i];
                         });
                     },
