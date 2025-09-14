@@ -19,16 +19,14 @@ const {log,error,warn}=console;
         (ew) => {
             log(`%cwindow:${ew.type}`,'color:purple;font-weight:bold');
             try {
-
                 const [r, r9, r5, r2] = rads();
-
                 const app = document.getElementById('app');
                 if (!(
                     app instanceof HTMLElement
                 )) {
                     throw new Error('root:failed');
                 }
-                // function shapes(c, rd = radius, mw = mwidth)
+
                 const shp = shapes(
                     app.querySelector('canvas')?.getContext('2d')
                 );
@@ -48,36 +46,25 @@ const {log,error,warn}=console;
                 ))
                 {
                     throw new Error('elements:failed');
-                }
-                                
-                                
+                }                                
                 const values = valuesClosure();
                 const {style, clear, arcc, point, line} = shp;
                 /*-----------------------------------------------------------*/
                 /*-----------------------------------------------------------*/
-
                 P.addEventListener(
                     'click',
                     (e) => {
                         e.stopPropagation();
-
                         console.clear();
-
                         const valuesArray = values(e.offsetX, e.offsetY);
                         log(valuesArray);
                         if (!valuesArray) {
                             warn('userEvent:failed');
                             return;
                         }
-
-                        // log(valuesArray);
-
                         // values
-
                         const [A, B] = valuesArray;
-
                         const [a, x, y, tg, ct, hp, bt] = A;
-
                         // draw
                         clear();
                         style();
