@@ -14,4 +14,5 @@ export {
     isStr,
     isArrNum,
     isArrStr,
-    isObj};
+    isObj
+};

@@ -5,8 +5,6 @@ import shapes from './modules/shapes.js';
 import list from './modules/list.js';
 import plan from './modules/plan.js';
 
-
-
 const {log,error,warn}=console;
 (function main() {
     if (
