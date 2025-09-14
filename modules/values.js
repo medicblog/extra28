@@ -27,7 +27,6 @@ const values = {
         let _y = fix(r * _sin);
         let _tg = _x !== 0 ? fix(_y/_x) : 0;
         let _ct = _y !== 0 ? fix(_x/_y) : 0;
-
         const result = {
             _values: {
                 a: fix(a),
@@ -51,10 +50,8 @@ const values = {
                 PRC: `${fix((a / (2 * PI)) * 100)}%`,
             },
         };
-
         const v_values = Object.values(result._values);
         const v_texts  = Object.values(result._texts);
-
         if (!(
             v_values.length === nsize
             && v_texts.length === lsize
