@@ -1,71 +1,51 @@
-// @ts-check
-// 'use strict';
 import values from './modules/values.js';
 import shapes from './modules/shapes.js';
 import list from './modules/list.js';
 import plan from './modules/plan.js';
-
 const {log,error,warn}=console;
 (function main() {
     if (
         !window || typeof window !== 'object'
         || !('document' in window) || window.top !== window.self
-    )
-    {
+    ){
         warn('window:failed');
         return;
     }
     window.addEventListener(
         'load',
-        (ew) => {
-            log(`%cwindow:${ew.type}`,'color:purple;font-weight:bold');
+        () => {
             try {
                 const [r, r9, r5, r2] = values.radii();
-
                 const app = document.getElementById('app');
                 if (!(
                     app instanceof HTMLElement
                 )) {
                     throw new Error('root:failed');
                 }
-
                 const shp = shapes(
                     app.querySelector('canvas')?.getContext('2d')
                 );
-
                 const lst = list(
                     app.querySelector('#list')?.querySelectorAll('li')
                 );
-
                 const pln = plan(
                     app.querySelector('#plan') ?? {}
                 );
-
-                if (!(
-                    shp && typeof shp === 'object'
-                    && lst && pln
-                ))
-                {
+                if (!(shp && lst && pln)){
                     throw new Error('elements:failed');
-                }                                
-
+                }
                 const {style, clear, arcc, point, line} = shp;
-
-                /*-----------------------------------------------------------*/
                 pln.addEventListener(
                     'click',
                     (e) => {
                         e.stopPropagation();
-                        console.clear();
                         const valuesArray = values.getResult(e.offsetX, e.offsetY);
-                        log(valuesArray);
                         if (!valuesArray) {
                             warn('userEvent:failed');
                             return;
                         }
                         const {_texts} = valuesArray;
                         const {a, x, y, tg, ct, hp, btg} = valuesArray._values;
-                        // _draw_
                         clear();
                         style();
                         if (a !== 0) {
@@ -108,7 +88,6 @@ const {log,error,warn}=console;
                         point(0, r);
                         point(r);
                         point();
-                        // _text_
                         lst.forEach((li) => {
                             let text = 'N/A';
                             if (
@@ -116,7 +95,6 @@ const {log,error,warn}=console;
                                 && li.dataset.id
                                 && Object.hasOwn(_texts, li.dataset.id) 
                             ) {
-                                // @ts-ignore
                                 text = _texts[li.dataset.id];     
                             }
                             li.textContent = text;
@@ -133,5 +111,3 @@ const {log,error,warn}=console;
         }
     );
 })();
-
-log('%c[main:end]','font-weight:bold;color:grey');

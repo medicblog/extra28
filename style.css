@@ -12,7 +12,7 @@ body{
     overflow:auto
 }
 ul{
-    list-style-type: none;
+    list-style-type:none
 }
 .page noscript {
     font:16px monospace;
@@ -29,21 +29,18 @@ ul{
     background-color:rgba(0,50,0,.2);
     border:10px solid darkgreen;
     & main{
-        outline:5px solid rgba(0,128,0,.5);
-        outline-offset:-5px;
+        outline:2px solid rgba(0,0,0,.7);
         width:min(550px,100%);
         min-height:550px;
-        font-size: 20px;
+        font-size:20px;
         font-family:system-ui, sans-serif;
         & h1 {
-            font-size: 1em;
-            text-align: center;
+            font-size:1em;
+            text-align:center;
             width:100%;
-            padding:5px;
+            padding:10px
         }
         & #box{
-            outline:2px solid rgba(255,10,0,.5);
-            outline-offset: -8px;
             position:relative;
             background:no-repeat center/100% url('./circle.svg');
             & canvas{
@@ -64,28 +61,25 @@ ul{
             }
         }
         & #list{
-            outline:2px solid purple;
             font-size:.8em;
             width:100%;
-            display: grid;
-            grid-template: repeat(2,25px)/repeat(5,1fr);
+            display:grid;
+            grid-template:repeat(2,28px)/repeat(5,1fr);
             & li{
-                outline: 1px solid rgba(0,0,0,.8);
+                outline:1px solid rgba(0,0,0,.8);
                 padding:5px;  
                 position:relative;
-                text-align: right;
-                overflow: auto;
+                text-align:right;
+                overflow:auto
             }
             & li::before{
-                color:purple;
-                outline:1px dotted purple;
                 font:bold 12px monospace;
                 max-width:4ch;
                 content:attr(data-id);
                 position:absolute;
                 top:0;
                 bottom:0;
-                left:5px;
+                left:5px
             }
         }
     }
@@ -95,6 +89,6 @@ ul{
         transform:scale(.7)
     }
     .page main #list{
-        grid-template: repeat(5,25px)/repeat(2,1fr);
+        grid-template:repeat(5,28px)/repeat(2,1fr);
     }
 }

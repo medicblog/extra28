@@ -1,4 +1,3 @@
-// @ts-check
 const _base = {
     radius: 200,
     mwidth: 250,
@@ -6,5 +5,4 @@ const _base = {
     lsize: 10,
     pc: 2 * Math.PI
 };
-
 export default _base;

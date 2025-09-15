@@ -1,4 +1,3 @@
-// @ts-check
 import _base from './globals/base.js';
 import {fix, isNum, isArrNum, isArrStr} from './globals/utils.js';
 const {PI,acos,hypot,round,abs} = Math;
@@ -64,5 +63,4 @@ const values = {
         return result;
     }
 };
-
 export default values;

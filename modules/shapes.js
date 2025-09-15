@@ -1,8 +1,6 @@
-// @ts-check
 import _base from './globals/base.js';
 const {radius, mwidth, pc} = _base;
-// @ts-ignore
-function shapes(c, rd = radius, mw = mwidth) {
+export default function shapes(c, rd = radius, mw = mwidth) {
     if (!(
         c instanceof CanvasRenderingContext2D
         && c.canvas.offsetWidth === 2 * mw
@@ -41,5 +39,3 @@ function shapes(c, rd = radius, mw = mwidth) {
         },        
     };
 }
-
-export default shapes;

@@ -1,8 +1,6 @@
-// @ts-check
 import _base from './globals/base.js';
 const {lsize} = _base;
-
-function list(ul = {}) {
+export default function list(ul = {}) {
     if (!(
         ul instanceof NodeList
         && ul.length === lsize
@@ -11,5 +9,3 @@ function list(ul = {}) {
     }
     return ul;
 }
-
-export default list;
