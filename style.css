@@ -28,14 +28,14 @@ ul{
     min-height:100vh;
     background-color:rgba(0,50,0,.2);
     border:10px solid darkgreen;
-    & article{
+    & main{
         outline:5px solid rgba(0,128,0,.5);
         outline-offset:-5px;
         width:min(550px,100%);
         min-height:550px;
         font-size: 20px;
         font-family:system-ui, sans-serif;
-        & h2 {
+        & h1 {
             font-size: 1em;
             text-align: center;
             width:100%;
@@ -94,7 +94,7 @@ ul{
     #box{
         transform:scale(.7)
     }
-    .page article #list{
+    .page main #list{
         grid-template: repeat(5,25px)/repeat(2,1fr);
     }
 }
