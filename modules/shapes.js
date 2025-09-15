@@ -1,11 +1,6 @@
 // @ts-check
-// const pc = 2 * Math.PI;
-
 import _base from './globals/base.js';
-
-
 const {radius, mwidth, pc} = _base;
-
 // @ts-ignore
 function shapes(c, rd = radius, mw = mwidth) {
     if (!(
