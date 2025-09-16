@@ -1,3 +1,4 @@
+// @ts-check
 import values from './modules/values.js';
 import shapes from './modules/shapes.js';
 import list from './modules/list.js';
@@ -45,7 +46,8 @@ const {log,error,warn}=console;
                             return;
                         }
                         const {_texts} = valuesArray;
-                        const {a, x, y, tg, ct, hp, btg} = valuesArray._values;
+                        const {a, x, y,tc,hp} = valuesArray._values;
+                        let [_x, _y, _xo, _yo] = tc;
                         clear();
                         style();
                         if (a !== 0) {
@@ -56,17 +58,16 @@ const {log,error,warn}=console;
                             arcc(r, a);
                         }
                         line();
-                        if (tg && ct) {
+                        /*
+                        b   _x _y
+                        1   r   tg
+                        0   ct  r
+                        */
+                        if (_x && _y) {
                             style('rgba(0,128,0,.8)');
-                            if (btg === 1) {
-                                line(r, tg, r, 0);
-                                line(r, tg);
-                                point(r, tg);
-                            } else {
-                                line(ct, r, 0, r);
-                                line(ct, r);
-                                point(ct, r);
-                            }
+                            line(_x, _y, _xo, _yo);
+                            line(_x, _y);
+                            point(_x, _y);
                         }
                         style('rgba(0,0,255,.8)');
                         line(x, y, 0, y);
@@ -93,8 +94,9 @@ const {log,error,warn}=console;
                             if (
                                 li instanceof HTMLElement
                                 && li.dataset.id
-                                && Object.hasOwn(_texts, li.dataset.id) 
+                                && Object.hasOwn(_texts, String(li.dataset.id)) 
                             ) {
+                                // @ts-ignore
                                 text = _texts[li.dataset.id];     
                             }
                             li.textContent = text;

@@ -14,11 +14,7 @@ body{
 ul{
     list-style-type:none
 }
-.page noscript {
-    font:16px monospace;
-    padding:1em
-}
-.flex-c{
+.flx{
     display:flex;
     flex-flow:column nowrap;
     justify-content:center;
@@ -28,6 +24,10 @@ ul{
     min-height:100vh;
     background-color:rgba(0,50,0,.2);
     border:10px solid darkgreen;
+    & noscript {
+        font:16px monospace;
+        padding:1em
+    }
     & main{
         outline:2px solid rgba(0,0,0,.7);
         width:min(550px,100%);
@@ -64,22 +64,28 @@ ul{
             font-size:.8em;
             width:100%;
             display:grid;
-            grid-template:repeat(2,28px)/repeat(5,1fr);
+            grid-template-columns:repeat(5,1fr);
+            grid-template-rows:auto;
             & li{
                 outline:1px solid rgba(0,0,0,.8);
                 padding:5px;  
+                padding-top:0;
                 position:relative;
                 text-align:right;
                 overflow:auto
             }
-            & li::before{
-                font:bold 12px monospace;
-                max-width:4ch;
+            & li::before,
+            & li::after{
+                font:bold 12px monospace
+            }
+            & [data-id]::before{
                 content:attr(data-id);
-                position:absolute;
-                top:0;
-                bottom:0;
-                left:5px
+                outline:1px dotted purple;
+                display:block;
+                text-align:left
+            }
+            & [data-sym]::after{
+                content:attr(data-sym)
             }
         }
     }
@@ -89,6 +95,6 @@ ul{
         transform:scale(.7)
     }
     .page main #list{
-        grid-template:repeat(5,28px)/repeat(2,1fr);
+        grid-template-columns:repeat(2,1fr)
     }
 }
